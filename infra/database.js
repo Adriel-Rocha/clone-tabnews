@@ -7,7 +7,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV == "development" ? false : true,
+    ssl: getSSLValues(),
   });
 
   try {
@@ -25,3 +25,14 @@ async function query(queryObject) {
 export default {
   query: query,
 };
+
+//caso haja certificado pŕoprio colar conteúdo do certificado baixado do sgbd no formato de string na variável de ambiente POSTGRES_CA(obs: caso haja quebras de linhas no texto substituir por \n que é a representação da quebra de linha no formato de string)"
+function getSSLValues() {
+  if (process.env.POSTGRES_CA) {
+    return {
+      ca: process.env.POSTGRES_CA,
+    };
+  }
+
+  return process.env.NODE_ENV == "development" ? false : true;
+}
