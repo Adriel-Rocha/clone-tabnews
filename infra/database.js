@@ -29,10 +29,12 @@ async function getNewClient() {
   return client;
 }
 
-export default {
+const database = {
   query,
   getNewClient,
 };
+
+export default database;
 
 //caso haja certificado pŕoprio colar conteúdo do certificado baixado do sgbd no formato de string na variável de ambiente POSTGRES_CA(obs: caso haja quebras de linhas no texto substituir por \n que é a representação da quebra de linha no formato de string)"
 function getSSLValues() {
